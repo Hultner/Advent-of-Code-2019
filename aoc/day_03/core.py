@@ -69,13 +69,17 @@ def manhattan_distance(p, q):
 
 def distance_to_intersect(lines):
     # Set of all cordinates visited in 1
-    line_a = set(cordinates(lines[0]))
+    line_a = list(cordinates(lines[0]))
     # Set of all cordinates visited in 2
-    line_b = set(cordinates(lines[1]))
+    line_b = list(cordinates(lines[1]))
     # intersection of 1 and 2
-    crossings = line_a & line_b
+    crossings = set(line_a) & set(line_b)
     # min manhattan distance to intersections
-    return min(manhattan_distance((0, 0), cord) for cord in crossings)
+    return (
+        min(manhattan_distance((0, 0), cord) for cord in crossings),
+        # Starting point is excluded hence step from it and to it is added (+2)
+        min(line_a.index(cord) + line_b.index(cord) for cord in crossings) + 2,
+    )
 
 
 def part_1(puzzle_input: Tuple[Number] = p1) -> Number:
@@ -128,7 +132,7 @@ def part_1(puzzle_input: Tuple[Number] = p1) -> Number:
     intersection?
     """
     lines = parse_moves(puzzle_input)
-    return distance_to_intersect(lines)
+    return distance_to_intersect(lines)[0]
 
 
 def part_2(puzzle_input: Tuple[Number] = p1) -> Number:
@@ -176,4 +180,5 @@ def part_2(puzzle_input: Tuple[Number] = p1) -> Number:
     What is the fewest combined steps the wires must take to reach an
     intersection?
     """
-    return 0
+    lines = parse_moves(puzzle_input)
+    return distance_to_intersect(lines)[1]
