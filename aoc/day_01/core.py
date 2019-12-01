@@ -14,12 +14,13 @@ The Elves quickly load you into a spacecraft and prepare to launch.
 
 """
 from numbers import Number
+from typing import Tuple
 from aoc.day_01.seed import p1
 
 
 def launch_fuel_required(mass: Number) -> Number:
     "Returns the fuel required for given mass"
-    return int(mass / 3) - 2
+    return mass // 3 - 2
 
 
 def launch_fuel_for_fuel(mass: Number) -> Number:
