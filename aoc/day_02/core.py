@@ -113,7 +113,6 @@ class Computer:
         """
 
         op, *args = instruction
-        # TODO: Remove or use proper logger
         logging.debug(f"Executing: {op}")
         logging.debug(self.memory)
         function_map[op](*args, memory=self.memory)
