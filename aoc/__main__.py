@@ -1,9 +1,13 @@
 from typing import NoReturn
 from aoc.day_01 import core as day_01
+from aoc.day_02 import core as day_02
 
 
 def main() -> NoReturn:
-    puzzles: Tuple = ((day_01.part_1(), day_01.part_2()),)
+    puzzles: Tuple = (
+        (day_01.part_1(), day_01.part_2()),
+        (day_02.part_1(), day_02.part_2()),
+    )
 
     for (day, parts) in enumerate(puzzles, start=1):
         print(f"Day {day}:")
