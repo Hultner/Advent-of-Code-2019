@@ -10,7 +10,7 @@ from aoc.day_04.seed import p1
 
 
 def rle(data: str) -> Iterable[Tuple[str, int]]:
-    """Returns run-lenght-encoding Tuples for string"""
+    """Returns run-lengthh-encoding Tuples for string"""
     # A memory efficient (lazy) and pythonic solution using generators
     return ((x, sum(1 for _ in y)) for x, y in groupby(data))
 
