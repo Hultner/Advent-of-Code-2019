@@ -82,7 +82,7 @@ def distance_to_intersect(lines):
     )
 
 
-def part_1(puzzle_input: Tuple[Number] = p1) -> Number:
+def part_1(puzzle_input: str = p1) -> Number:
     """
     The wires twist and turn, but the two wires occasionally cross paths. To
     fix the circuit, you need to find the intersection point closest to the
@@ -135,7 +135,7 @@ def part_1(puzzle_input: Tuple[Number] = p1) -> Number:
     return distance_to_intersect(lines)[0]
 
 
-def part_2(puzzle_input: Tuple[Number] = p1) -> Number:
+def part_2(puzzle_input: str = p1) -> Number:
     """
     --- Part Two ---
 
