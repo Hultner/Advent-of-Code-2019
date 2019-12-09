@@ -14,6 +14,11 @@ def verify_fuel_for_fuel(mass, fuel):
     assert fuel == launch_fuel_for_fuel(mass)
 
 
+def test_parts():
+    assert 3296269 == part_1()
+    assert 4941547 == part_2()
+
+
 def test_fuel():
     """
      - For a mass of 12, divide by 3 and round down to get 4, then subtract 2
