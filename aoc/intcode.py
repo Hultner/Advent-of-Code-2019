@@ -4,7 +4,7 @@ IntCode Computer WIP
 Currently implemented up to day 5 pt 2
 
 Ideas for future improvments
- - Add a dequeue based StdIO implementation,
+ - Add a deque based StdIO implementation,
    useful for preseeding input, catching output
  - Split out intcode to a module with subfiles, it's getting a bit large
     - Computer
@@ -20,11 +20,12 @@ Ideas for future improvments
     - Errors
  - Move some stuff into Computer class?
  - Add more logging
- -  
+ - ...
 
 """
 from dataclasses import dataclass, field
 from enum import IntEnum
+from functools import partial
 from itertools import permutations, zip_longest
 from numbers import Number
 from typing import Tuple, Iterable, List, NoReturn, Dict
@@ -46,15 +47,16 @@ class ExecutionFinished(Exception):
 
 # Default STDIN/STDOUT implementation
 class StdIO:
-    def write(self, data):
+    def write(self, data: int) -> NoReturn:
         print("STDOUT:")
         print(data)
 
-    def read(self):
-        return input()
+    def read(self) -> int:
+        return int(input())
 
 
 DEFAULT_IO = StdIO()
+
 
 # OpCodes
 class OpCode(IntEnum):
@@ -226,6 +228,8 @@ class Computer:
     memory: List[int]
     "Memory shouldn't be a arbitrary iterator as we will access it by index"
 
+    io: StdIO = DEFAULT_IO
+
     pos: int = field(default=0, init=False)
     "Position of current op code"
 
@@ -286,7 +290,24 @@ class Computer:
         op, args = instruction
         logging.debug(f"Executing: {op}")
         logging.debug(self.memory)
-        self.pos = function_map[op](*list(args), memory=self.memory).next_addr(self.pos)
+
+        # Prepare functions by injecting external hardware
+        # Keyboard and monitor for now
+        # This breaks argument introspections so it's applied after that step.
+        func = function_map[op]
+        if key := next(
+            (
+                param
+                for param, type_ in func.__annotations__.items()
+                if type_ == StdIO
+            ),
+            False,
+        ):
+            func = partial(func, **{key: self.io})
+
+        self.pos = func(*list(args), memory=self.memory).next_addr(
+            self.pos
+        )
         logging.debug(self.memory)
 
     def run_program(self) -> bool:

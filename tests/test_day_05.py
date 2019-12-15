@@ -1,4 +1,4 @@
-from aoc.day_0X.core import (
+from aoc.day_05.core import (
     part_1,
     part_2,
 )
@@ -6,11 +6,8 @@ from aoc.day_0X.core import (
 
 def test_parts():
     # Oracle says so
-    # 12896948
-    assert part_1() == 0
-    # 7704130
-    assert part_2() == 0
-    assert True
+    assert part_1() == 12896948
+    assert part_2() == 7704130
 
 
 def verify_x(data, expected):
