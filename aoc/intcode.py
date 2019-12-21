@@ -303,6 +303,8 @@ class Computer:
             ),
             False,
         ):
+            # If we need to prepare more than IO in the future I'll break out
+            # this to a fuction taking a list of pairs (ArgType, passed_value)
             func = partial(func, **{key: self.io})
 
         self.pos = func(*list(args), memory=self.memory).next_addr(
@@ -322,6 +324,11 @@ class Computer:
             return True
         # Program finished without halt
         return False
+
+    def rerun_program(self) -> bool:
+        """Resets instruction pointer and runs program again"""
+        self.pos = 0
+        return self.run_program
 
     def read(self, memory_index: int = 0):
         """Returns memory at given postion (or first)"""

@@ -1,4 +1,5 @@
 """
+TODO: Day 5 desc
 """
 from collections import deque
 from numbers import Number
@@ -15,7 +16,7 @@ class QueuedIO(StdIO):
     stdin: Deque
     stdout: Deque
 
-    def __init__(self, in_: Iterable[int]):
+    def __init__(self, in_: Iterable[int]) -> NoReturn:
         self.stdin = deque(in_)
         self.stdout = deque()
 
@@ -27,28 +28,29 @@ class QueuedIO(StdIO):
         return self.stdin.popleft()
 
 
+def run_io_program(program: Iterable[int], stdin: Iterable[int]) -> int:
+    """
+    Returns the last value printed to stdout when running program with `stdin`
+    """
+    io = QueuedIO(stdin)
+    Computer(list(program), io=io).run_program()
+    return io.stdout.pop()
+
+
 def part_1(puzzle_input: Tuple[Number] = p1) -> Number:
     """
+    TODO: Day 5 pt1 desc
     """
     # Put 1 to stdin
-    io = QueuedIO([1,])
-
-    c = Computer(list(p1), io=io)
-    c.run_program()
-    # The computer memory has no significance here, return last stdout
-    return io.stdout.pop()
+    return run_io_program(p1, (1,))
 
 
 def part_2(puzzle_input: Tuple[Number] = p1) -> Number:
     """
+    TODO: Day 5 pt2 desc
     """
     # Put 5 to stdin
-    io = QueuedIO([5,])
-
-    c = Computer(list(p1), io=io)
-    c.run_program()
-    # The computer memory has no significance here, return last stdout
-    return io.stdout.pop()
+    return run_io_program(p1, (5,))
 
 
 if __name__ == "__main__":
