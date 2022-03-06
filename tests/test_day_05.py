@@ -3,6 +3,7 @@ from typing import Iterable, Callable, NoReturn
 import pytest
 from hypothesis import given
 import hypothesis.strategies as st
+
 from aoc.day_05.core import part_1, part_2, run_io_program
 
 MAX_SIGNED_8BIT = 0b_1111_1111 // 2  # 127
@@ -93,4 +94,3 @@ def test_io_program(
     data: Iterable[int], expected: Callable[[int], int], stdin: int, msg: str
 ) -> NoReturn:
     assert run_io_program(data, (stdin,)) == expected(stdin), msg
-
